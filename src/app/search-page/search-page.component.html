@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col-12 mt-5 mb-3">
+    <h2>Search Your Favorite News</h2>
+  </div>
+  <div class="col-12 my-4">
+    <form [formGroup]="homePageSearchForm" (submit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <input type="text" class="form-control" placeholder="Enter Search Text" formControlName="searchText" >
+          <small *ngIf="homePageSearchForm.get('searchText').errors?.required">
+            required
+          </small>
+        </div>
+        <div class="col">
+          <select class="form-control" (change)="getSource($event)" formControlName="searchSource">
+            <option>Select Source</option>
+            <option value="hacker-news">Hacker News</option>
+            <option value="wiki">Wiki</option>
+          </select>
+          <small *ngIf="homePageSearchForm.get('searchSource').errors?.required">
+            required
+          </small>
+        </div>
+        <div class="col">
+          <button type="submit" [disabled]="homePageSearchForm.invalid" class="btn btn-outline-primary">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Search
+          </button>
+          <button type="reset" class="btn btn-outline-info mx-2" (click)="onClear()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Author</th>
+            <th scope="col">Title</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngIf="searchResults.length === 0">
+            <td colspan="3">No Results Found!! Try Again</td>
+          </tr>
+          <tr *ngFor="let searchResult of searchResults; let i = index;">
+            <td scope="row">{{i+1}}</td>
+            <td class="text-capitalize">{{searchResult.author}}</td>
+            <td>
+              <a target="_blank" href="{{searchResult.url || searchResult.story_url}}">{{searchResult.title || searchResult.story_title}}</a>
+              <span *ngIf="searchResult && searchResult.submissionCount">({{searchResult.submissionCount}})</span>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+  </div>
+</div>
