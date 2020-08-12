@@ -1,6 +1,10 @@
 # NewsPortal
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.3.
+
+## Install and Run the Project
+- `git clone https://github.com/vishal002/news-portal.git`
+- `npm install`
+- `npm start`
 
 ## Development server
 
